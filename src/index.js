@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
-/*next step switch X to O with boolean*/ 
+/*Fair le commit */ 
 function Square(props) {
    
      
@@ -21,13 +21,16 @@ function Square(props) {
       super(props);
       this.state = {
         squares : Array(9).fill(null),
+        leBoolean : true,
       };
       }
       
     handleClick(i){
       const squaress = this.state.squares.slice()
-          squaress[i]="X"
-          this.setState({squares : squaress}
+          squaress[i]= this.state.leBoolean ? "X" : "O"
+          this.setState({squares : squaress,
+                        leBoolean : !this.state.leBoolean,}  /*Passer le boolean de true a false et inversement : https://stackoverflow.com/questions/11604409/how-to-toggle-a-boolean*/
+          
         )
     }  
 
@@ -80,6 +83,7 @@ function Square(props) {
       );
     }
   }
+  
   
   // ========================================
   
