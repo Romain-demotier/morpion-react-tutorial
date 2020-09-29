@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
-/*Fair le commit */ 
+
 function Square(props) {
    
      
@@ -27,6 +27,9 @@ function Square(props) {
       
     handleClick(i){
       const squaress = this.state.squares.slice()
+      if (calculateWinner(squaress) || squaress[i]) {
+        return;
+      }
           squaress[i]= this.state.leBoolean ? "X" : "O"
           this.setState({squares : squaress,
                         leBoolean : !this.state.leBoolean,}  /*Passer le boolean de true a false et inversement : https://stackoverflow.com/questions/11604409/how-to-toggle-a-boolean*/
@@ -41,7 +44,11 @@ function Square(props) {
     }
   
     render() {
-      const status = 'Next player: X';
+      const winner = calculateWinner(this.state.squares);
+
+      let status; /* Affiche Message Vainqueur et prochain joueur */
+
+        winner ? status = "le gagnant est " + winner : status = "Le prochain est "+ (this.state.leBoolean ? "X" : "O");
   
       return (
         <div>
@@ -84,7 +91,26 @@ function Square(props) {
     }
   }
   
-  
+  /* fonction pour definir le Vainqueur */
+  function calculateWinner(squares) {
+    const lines = [
+      [0, 1, 2],
+      [3, 4, 5],
+      [6, 7, 8],
+      [0, 3, 6],
+      [1, 4, 7],
+      [2, 5, 8],
+      [0, 4, 8],
+      [2, 4, 6],
+    ];
+    for (let i = 0; i < lines.length; i++) {
+      const [a, b, c] = lines[i];
+      if (squares[a] && squares[a] === squares[b] && squares[a] === squares[c]) {
+        return squares[a];
+      }
+    }
+    return null;
+  }
   // ========================================
   
   ReactDOM.render(
